@@ -27,7 +27,8 @@ signUpBtn.addEventListener("click", () => {
 // fistForm.addEventListener("submit", (e) => e.preventDefault());
 // secondForm.addEventListener("submit", (e) => e.preventDefault());
 
-function submit_ (type){
+
+function submit_(type){
     // alert("111111111111111111111111")
     var uid = "#username"
     var pid = "#password"
@@ -37,6 +38,7 @@ function submit_ (type){
     var password = document.querySelector(pid+type).value;
     // alert(username)
     // alert(password)
+    // alert("type="+type)
 
     $.ajax({
         url: "login/isLogin",
@@ -50,7 +52,14 @@ function submit_ (type){
         dataType: "json",
         success: function (obj) {
             // alert('运行成功')
-            location.href="index_manager.html";
+            // alert("成功返回+"+obj)
+            if(obj === "error"){
+                alert("用户名或密码输入有误！！！")
+            }else{
+                // location.href="index_manager.html";
+                location.href=(type === "1") ? "index_manager.html" : "index_sale.html";
+            }
+
             return false;
         }
     })
