@@ -5,6 +5,10 @@ public class Salesman {
     String sale_name;
     String sale_username;
     String sale_password;
+    String sale_sex;
+
+
+
     int sale_phone;
 
     public Salesman() {
@@ -50,6 +54,14 @@ public class Salesman {
         this.sale_phone = sale_phone;
     }
 
+    public String getSale_sex() {
+        return sale_sex;
+    }
+
+    public void setSale_sex(String sale_sex) {
+        this.sale_sex = sale_sex;
+    }
+
     @Override
     public String toString() {
         return "Salesman{" +
@@ -57,6 +69,7 @@ public class Salesman {
                 ", sale_name='" + sale_name + '\'' +
                 ", sale_username='" + sale_username + '\'' +
                 ", sale_password='" + sale_password + '\'' +
+                ", sale_sex='" + sale_sex + '\'' +
                 ", sale_phone=" + sale_phone +
                 '}';
     }

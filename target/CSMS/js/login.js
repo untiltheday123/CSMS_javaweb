@@ -48,7 +48,8 @@ function submit_(type){
             "type": type
         },
         type: "get",
-        async: false,//这里这里，要用同步请求
+        // async: false,//这里这里，要用同步请求
+        async: true,
         dataType: "json",
         success: function (obj) {
             // alert('运行成功')
