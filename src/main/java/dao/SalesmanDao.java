@@ -8,5 +8,7 @@ public interface SalesmanDao {
 
     int selectUserByUsernameAndUserPwd(String username, String userpwd);
 
-    List<Salesman> querySalesman();
+    int querySalesman();
+
+    List<Salesman> querySalesmanByPage(int start);
 }

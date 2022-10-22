@@ -17,7 +17,13 @@ public class SalesmanServiceImpl implements SalesmanService {
     }
 
     @Override
-    public List<Salesman> querySalesman() {
+    public int querySalesman() {
+        System.out.println("SalesmanServiceImpl.querySalesman");
         return salesmanDao.querySalesman();
+    }
+
+    @Override
+    public List<Salesman> querySalesmanByPage(int start) {
+        return salesmanDao.querySalesmanByPage(start);
     }
 }

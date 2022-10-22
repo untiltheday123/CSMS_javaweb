@@ -15,11 +15,21 @@ public class SalesmanServlet extends BaseServlet{
 
     SalesmanService salesmanService = new SalesmanServiceImpl();
 
-    public void querySalesman(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Salesman> allSalesman = salesmanService.querySalesman();
-//        for (Salesman salesman: allSalesman) {
-//            System.out.println(salesman);
-//        }
+    public void querySalesmanByPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String start_ = req.getParameter("start");
+        System.out.println(start_);
+        int start = Integer.parseInt(start_);
+        List<Salesman> allSalesman = salesmanService.querySalesmanByPage(start);
+        for (Salesman salesman: allSalesman) {
+            System.out.println(salesman);
+        }
         writeValue(allSalesman,resp);
+    }
+
+    public void querySalesman(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("SalesmanServlet.querySalesman");
+        int total = salesmanService.querySalesman();
+        System.out.println("total:"+total);
+        writeValue(total,resp);
     }
 }

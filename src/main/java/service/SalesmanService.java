@@ -10,5 +10,7 @@ public interface SalesmanService {
 
     int sale_login(String username, String userpwd);
 
-    List<Salesman> querySalesman();
+    int querySalesman();
+
+    List<Salesman> querySalesmanByPage(int start);
 }
