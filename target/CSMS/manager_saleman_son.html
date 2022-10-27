@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="margin: 40px;overflow-y: scroll">
+    <template>
+        <!--        <el-button @click="resetDateFilter">清除日期过滤器</el-button>-->
+        <!--        <el-button @click="clearFilter">清除所有过滤器</el-button>-->
+        <el-table
+                ref="filterTable"
+                :data="tableData"
+                style="width: 100%"
+        >
+
+
+            <!--            <el-table-column-->
+            <!--                    prop="date"-->
+            <!--                    label="日期"-->
+            <!--                    sortable-->
+            <!--                    width="180"-->
+            <!--                    column-key="date"-->
+            <!--                    :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"-->
+            <!--                    :filter-method="filterHandler"-->
+            <!--            >-->
+            <!--            </el-table-column>-->
+
+            <el-table-column type="index"
+                             width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="sale_name"
+                    label="姓名"
+                    width="170">
+            </el-table-column>
+            <el-table-column
+                    prop="sale_id"
+                    sortable
+                    label="工号"
+                    width="170">
+            </el-table-column>
+            <el-table-column
+                    prop="sale_sex"
+                    sortable
+                    label="性别"
+                    width="140">
+            </el-table-column>
+            <el-table-column
+                    prop="sale_phone"
+                    sortable
+                    label="电话"
+                    width="170">
+            </el-table-column>
+
+            <el-table-column
+                    prop="mana_ord"
+                    label="管理订单"
+                    width="190">
+                <template slot-scope="scope">
+                    <el-button type="info" round plain @click="view_details(scope.row)" size="medium">查看详情</el-button>
+                    <!--                                                    <el-link href="#" @click="view_details(scope.row)">查看详情</el-link>-->
+                    <!--target="_blank"-->
+                    <!--manager_order.html-->
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="mana_ges"
+                    label="管理客户"
+                    width="190">
+                <el-button type="info" round plain @click="view_client(scope.row)" size="medium">查看详情</el-button>
+            </el-table-column>
+            <!--                                            </template>-->
+        </el-table>
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                @current-change="handleCurrentChange"
+                :total="totalCount">
+        </el-pagination>
+    </template>
+</div>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/getParameter.js"></script>
+<script src="js/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="js/index.js"></script>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            // tableData: [],
+            totalCount: 400,
+            currentPage: 1,
+            tableData: [{
+                sale_name: '王小虎',
+                sale_id: '123456',
+                sale_sex: '男',
+                sale_phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            }, {
+                name: '王小虎',
+                sale_id: '124456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '公司'
+            }, {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            },  {
+                sale_name: '王小虎',
+                sale_id: '234456',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '家'
+            }, {
+                name: '王小虎',
+                sale_id: '563546',
+                sex: '男',
+                phone: '12345678901',
+                mana_ord: '点我查看',
+                mana_ges: '点我查看',
+                // address: '上海市普陀区金沙江路 1518 弄',
+                // tag: '公司'
+            }]
+        },
+        mounted() {
+            var this_ = this
+            // 页面加载完成，发送异步请求
+            $.ajax({
+                url: "/Salesman/querySalesman",
+                data: {},
+                type: "get",
+                // async: false,//这里这里，要用同步请求
+                async: false,
+                dataType: "json",
+                success: function (obj) {
+                    this_.totalCount = obj;
+                }
+            })
+
+            this.selectSalesman(1);
+
+        },
+        methods: {
+            selectSalesman(page) {
+                var start = (page - 1) * 10;
+                // alert(start)
+                var this_ = this
+                $.ajax({
+                    url: "/Salesman/querySalesmanByPage",
+                    data: {
+                        start: start
+                    },
+                    type: "get",
+                    // async: false,//这里这里，要用同步请求
+                    async: false,
+                    dataType: "json",
+                    success: function (obj) {
+                        this_.tableData = obj;
+                    }
+                })
+            },
+            // resetDateFilter() {
+            //     this.$refs.filterTable.clearFilter('date');
+            // },
+            clearFilter() {
+                this.$refs.filterTable.clearFilter();
+            },
+            // formatter(row, column) {
+            //     return row.address;
+            // },
+            // filterTag(value, row) {
+            //     return row.tag === value;
+            // },
+            // filterHandler(value, row, column) {
+            //     const property = column['property'];
+            //     return row[property] === value;
+            // },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+                // this.currentPage = val;
+                this.selectSalesman(val);
+            },
+            view_details(row) {
+                console.log(row);
+                // alert("11111111111111111")
+                sessionStorage.setItem("name",row.sale_name)
+                sessionStorage.setItem("id",row.sale_id)
+                $("#app").load("manager_order.html");
+            }
+        }
+    })
+</script>
+</body>
+</html>

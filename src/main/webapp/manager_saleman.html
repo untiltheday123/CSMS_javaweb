@@ -14,6 +14,7 @@
 
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body class="t-bg-primary mx-sidenav-not-collapsed">
@@ -310,9 +311,9 @@
                             </header>
 
                             <!-- 右边盒子内容 -->
-                            <div class="mx-body__content" data-simplebar>
+                            <div class="mx-body__content" data-simplebar id="right_content">
 
-                                <div id="app" style="margin: 40px">
+                                <div id="app" style="margin: 40px auto">
                                     <template>
                                         <!--        <el-button @click="resetDateFilter">清除日期过滤器</el-button>-->
                                         <!--        <el-button @click="clearFilter">清除所有过滤器</el-button>-->
@@ -321,6 +322,7 @@
                                                 :data="tableData"
                                                 style="width: 100%"
                                         >
+
 
                                             <!--            <el-table-column-->
                                             <!--                    prop="date"-->
@@ -332,44 +334,53 @@
                                             <!--                    :filter-method="filterHandler"-->
                                             <!--            >-->
                                             <!--            </el-table-column>-->
+
                                             <el-table-column type="index"
-                                                             width="50">
+                                                             width="70">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="sale_name"
                                                     label="姓名"
-                                                    width="150">
+                                                    width="170">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="sale_id"
                                                     sortable
                                                     label="工号"
-                                                    width="150">
+                                                    width="170">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="sale_sex"
                                                     sortable
                                                     label="性别"
-                                                    width="120">
+                                                    width="140">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="sale_phone"
                                                     sortable
                                                     label="电话"
-                                                    width="150">
+                                                    width="170">
                                             </el-table-column>
+
                                             <el-table-column
                                                     prop="mana_ord"
                                                     label="管理订单"
-                                                    width="150">
-                                                <el-link href="manager_order.html" target="_blank">查看详情</el-link>
+                                                    width="190">
+                                                <template slot-scope="scope">
+                                                    <el-button type="info" round plain @click="view_details(scope.row)" size="medium">查看详情</el-button>
+<!--                                                    <el-link href="#" @click="view_details(scope.row)">查看详情</el-link>-->
+                                                    <!--target="_blank"-->
+                                                    <!--manager_order.html-->
+                                                </template>
                                             </el-table-column>
                                             <el-table-column
                                                     prop="mana_ges"
                                                     label="管理客户"
-                                                    width="150">
-                                                <el-link href="https://www.baidu.com" target="_blank">查看详情</el-link>
+                                                    width="190">
+                                                <el-button type="info" round plain @click="view_client(scope.row)" size="medium">查看详情</el-button>
+
                                             </el-table-column>
+                                            <!--                                            </template>-->
                                         </el-table>
                                         <el-pagination
                                                 background
@@ -378,6 +389,14 @@
                                                 :total="totalCount">
                                         </el-pagination>
                                     </template>
+<!--                                    <el-row>-->
+<!--                                        <el-button>默认按钮</el-button>-->
+<!--                                        <el-button type="primary">主要按钮</el-button>-->
+<!--                                        <el-button type="success">成功按钮</el-button>-->
+<!--                                        <el-button type="info">信息按钮</el-button>-->
+<!--                                        <el-button type="warning">警告按钮</el-button>-->
+<!--                                        <el-button type="danger">危险按钮</el-button>-->
+<!--                                    </el-row>-->
                                 </div>
                             </div>
                         </div>
@@ -431,114 +450,126 @@
 
 <script src="js/vue.js"></script>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/index.js"></script>
 
 <script>
-    new Vue({
-        el: "#app",
-        data: {
-            // tableData: [],
-            totalCount: 400,
-            currentPage: 1,
-            tableData: [{
-                sale_name: '王小虎',
-                sale_id: '123456',
-                sale_sex: '男',
-                sale_phone: '12345678901',
-                mana_ord: '点我查看',
-                mana_ges: '点我查看',
-                // address: '上海市普陀区金沙江路 1518 弄',
-                // tag: '家'
-            }, {
-                name: '王小虎',
-                sale_id: '124456',
-                sex: '男',
-                phone: '12345678901',
-                mana_ord: '点我查看',
-                mana_ges: '点我查看',
-                // address: '上海市普陀区金沙江路 1518 弄',
-                // tag: '公司'
-            }, {
-                sale_name: '王小虎',
-                sale_id: '234456',
-                sex: '男',
-                phone: '12345678901',
-                mana_ord: '点我查看',
-                mana_ges: '点我查看',
-                // address: '上海市普陀区金沙江路 1518 弄',
-                // tag: '家'
-            }, {
-                name: '王小虎',
-                sale_id: '563546',
-                sex: '男',
-                phone: '12345678901',
-                mana_ord: '点我查看',
-                mana_ges: '点我查看',
-                // address: '上海市普陀区金沙江路 1518 弄',
-                // tag: '公司'
-            }]
-        },
-        mounted() {
-            var this_ = this
-            // 页面加载完成，发送异步请求
-            $.ajax({
-                url: "/Salesman/querySalesman",
-                data: {},
-                type: "get",
-                // async: false,//这里这里，要用同步请求
-                async: false,
-                dataType: "json",
-                success: function (obj) {
-                    this_.totalCount = obj;
-                }
-            })
+    // var app = new Vue({
+    //     el: "#app",
+    //     data: {
+    //         // tableData: [],
+    //         totalCount: 400,
+    //         currentPage: 1,
+    //         tableData: [{
+    //             sale_name: '王小虎',
+    //             sale_id: '123456',
+    //             sale_sex: '男',
+    //             sale_phone: '12345678901',
+    //             mana_ord: '点我查看',
+    //             mana_ges: '点我查看',
+    //             // address: '上海市普陀区金沙江路 1518 弄',
+    //             // tag: '家'
+    //         }, {
+    //             name: '王小虎',
+    //             sale_id: '124456',
+    //             sex: '男',
+    //             phone: '12345678901',
+    //             mana_ord: '点我查看',
+    //             mana_ges: '点我查看',
+    //             // address: '上海市普陀区金沙江路 1518 弄',
+    //             // tag: '公司'
+    //         }, {
+    //             sale_name: '王小虎',
+    //             sale_id: '234456',
+    //             sex: '男',
+    //             phone: '12345678901',
+    //             mana_ord: '点我查看',
+    //             mana_ges: '点我查看',
+    //             // address: '上海市普陀区金沙江路 1518 弄',
+    //             // tag: '家'
+    //         }, {
+    //             name: '王小虎',
+    //             sale_id: '563546',
+    //             sex: '男',
+    //             phone: '12345678901',
+    //             mana_ord: '点我查看',
+    //             mana_ges: '点我查看',
+    //             // address: '上海市普陀区金沙江路 1518 弄',
+    //             // tag: '公司'
+    //         }]
+    //     },
+    //     mounted() {
+    //         var this_ = this
+    //         // 页面加载完成，发送异步请求
+    //         $.ajax({
+    //             url: "/Salesman/querySalesman",
+    //             data: {},
+    //             type: "get",
+    //             // async: false,//这里这里，要用同步请求
+    //             async: false,
+    //             dataType: "json",
+    //             success: function (obj) {
+    //                 this_.totalCount = obj;
+    //             }
+    //         })
+    //
+    //         this.selectSalesman(1);
+    //
+    //     },
+    //     methods: {
+    //         selectSalesman(page) {
+    //             var start = (page - 1) * 10;
+    //             // alert(start)
+    //             var this_ = this
+    //             $.ajax({
+    //                 url: "/Salesman/querySalesmanByPage",
+    //                 data: {
+    //                     start: start
+    //                 },
+    //                 type: "get",
+    //                 // async: false,//这里这里，要用同步请求
+    //                 async: false,
+    //                 dataType: "json",
+    //                 success: function (obj) {
+    //                     this_.tableData = obj;
+    //                 }
+    //             })
+    //         },
+    //         // resetDateFilter() {
+    //         //     this.$refs.filterTable.clearFilter('date');
+    //         // },
+    //         clearFilter() {
+    //             this.$refs.filterTable.clearFilter();
+    //         },
+    //         // formatter(row, column) {
+    //         //     return row.address;
+    //         // },
+    //         // filterTag(value, row) {
+    //         //     return row.tag === value;
+    //         // },
+    //         // filterHandler(value, row, column) {
+    //         //     const property = column['property'];
+    //         //     return row[property] === value;
+    //         // },
+    //         handleCurrentChange(val) {
+    //             console.log(`当前页: ${val}`);
+    //             // this.currentPage = val;
+    //             this.selectSalesman(val);
+    //         },
+    //         view_details(row) {
+    //             console.log(row);
+    //             $("#app").load("manager_order.html");
+    //         }
+    //     }
+    // })
+    //
+    // var app1 = new Vue({
+    //     el:"#app1",
+    //     data:{
+    //
+    //     }
+    // })
 
-            this.selectSalesman(1);
-
-        },
-        methods: {
-            selectSalesman(page) {
-                var start = (page - 1) * 10;
-                // alert(start)
-                var this_ = this
-                $.ajax({
-                    url: "/Salesman/querySalesmanByPage",
-                    data: {
-                        start: start
-                    },
-                    type: "get",
-                    // async: false,//这里这里，要用同步请求
-                    async: false,
-                    dataType: "json",
-                    success: function (obj) {
-                        this_.tableData = obj;
-                    }
-                })
-            },
-            // resetDateFilter() {
-            //     this.$refs.filterTable.clearFilter('date');
-            // },
-            clearFilter() {
-                this.$refs.filterTable.clearFilter();
-            },
-            // formatter(row, column) {
-            //     return row.address;
-            // },
-            // filterTag(value, row) {
-            //     return row.tag === value;
-            // },
-            // filterHandler(value, row, column) {
-            //     const property = column['property'];
-            //     return row[property] === value;
-            // },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
-                // this.currentPage = val;
-                this.selectSalesman(val);
-            }
-        }
-    })
-
+    $("#right_content").load("manager_saleman_son.html");
 
 </script>
 </body>

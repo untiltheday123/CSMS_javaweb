@@ -3,42 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/order_detail.css">
     <title>订单详情</title>
 </head>
 <body>
-<div id="app">
+<div id="app" style="margin:40px auto; overflow-y: scroll">
 
-    <div>
-        <el-steps :active="2" align-center>
-            <el-step title="步骤1" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="步骤2" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="步骤3" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="步骤4" description="这是一段很长很长很长的描述性文字"></el-step>
-        </el-steps>
-    </div>
+    <template>
+        <el-page-header @back="goBack" :content="content">
+        </el-page-header>
 
-    <div class="order">
-        <div class="order_msg">
-            123
+        <br/>
+
+        <div class="order">
+
+            <div class="step">
+                <el-steps :active="2" align-center>
+                    <el-step title="步骤1" description="这是一段很长很长很长的描述性文字"></el-step>
+                    <el-step title="步骤2" description="这是一段很长很长很长的描述性文字"></el-step>
+                    <el-step title="步骤3" description="这是一段很长很长很长的描述性文字"></el-step>
+                    <el-step title="步骤4" description="这是一段很长很长很长的描述性文字"></el-step>
+                </el-steps>
+            </div>
+
+            <br/>
+
+            <div class="order_msg">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <h3><span>订单信息</span></h3>
+                        <!--                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
+                    </div>
+                    <div class="text item">
+                        收货地址：北京市海淀区中关村南大街27号中央民族大学
+                    </div>
+                    <div class="text item">
+                        收货地址：北京市海淀区中关村南大街27号中央民族大学
+                    </div>
+                    <div class="text item">
+                        <!--                {{'列表内容 ' + o }}-->
+                        收货地址：北京市海淀区中关村南大街27号中央民族大学
+                    </div>
+                    <div class="text item">
+                        <!--                {{'列表内容 ' + o }}-->
+                        收货地址：北京市海淀区中关村南大街27号中央民族大学
+                    </div>
+                </el-card>
+                <el-card class="box-card" style="width: 300px">
+                    <div class="text item">
+                        <h3>订单状态</h3>
+                    </div>
+                    <div class="text item">
+                        {{state}}
+                        <img src="icon/订单详情-订单状态.png">
+                    </div>
+                </el-card>
+
+            </div>
+
+            <br/>
+
+            <div class="step">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+<!--                        <el-table-column-->
+<!--                                prop="goods_pic"-->
+<!--                                label="icon/是否显示商品图片.png"-->
+<!--                                width="180">-->
+<!--                        </el-table-column>-->
+                        <el-table-column
+                                prop="goods"
+                                label="商品"
+                                width="240">
+<!--                            <el-image-->
+<!--                                    style="width: 100px; height: 100px"-->
+<!--                                    :src=tableData.goods_url-->
+<!--                                    :fit="contain"></el-image>-->
+                        </el-table-column>
+                        <el-table-column
+                                prop="price"
+                                label="单价"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="number"
+                                label="数量"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="discounts"
+                                label="优惠"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="state"
+                                label="状态"
+                                width="180">
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
         </div>
-        <div class="order_state">
-            456
-        </div>
-    </div>
+
+    </template>
 
 </div>
 
 
 <script src="js/vue.js"></script>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/index.js"></script>
 <script>
     new Vue({
         el: "#app",
         data: {
+            state: '订单已完成',
+            content: '订单详情',
             tableData: [{
+                goods_url: 'img/cup.jpg',
                 date: '2016-05-02',
                 user_name: '王小虎',
                 address: '上海市普陀区金沙江路 1518 弄'
@@ -60,6 +145,10 @@
         methods: {
             formatter(row, column) {
                 return row.address;
+            },
+            goBack() {
+                // console.log('go back');
+                $("#right_content").load("manager_order.html");
             }
         }
     })
